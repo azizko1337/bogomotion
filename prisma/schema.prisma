@@ -1,0 +1,75 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  userId Int @id @unique @default(autoincrement())
+  email String @unique
+  password String
+  role String @default("USER") 
+  birthYear Int
+  sex String 
+  placeOfResidence String
+  additionalInformation String? //TODO: CHYBA ZMIANA
+  trainingSessions TrainingSession[] 
+}
+
+model TrainingSession{
+  sessionId Int @id @default(autoincrement())
+  user User @relation(fields: [userId], references: [userId])
+  userId Int @unique
+  type String 
+  age Int 
+  startedAt DateTime
+  endedAt DateTime
+  TrainingSessionResult TrainingSessionResult? 
+}
+
+model Resource{
+  resourceId Int @id @unique
+  type Boolean
+  age String //??
+  sex String
+  imageCategory String 
+  sessionResults TrainingSessionResult?
+  resourceEmotions ResourceEmotion[]
+}
+
+model TrainingSessionResult{
+  resultId Int @id @default(autoincrement())
+  session TrainingSession @relation(fields: [sessionId], references: [sessionId])
+  sessionId Int @unique
+  resource Resource @relation(fields: [resourceId], references: [resourceId])
+  resourceId Int @unique
+  startedAt DateTime
+  endedAt DateTime
+  sessionResultsEmotions SessionResultEmotions[]
+}
+
+model Emotion{
+  emotionId Int @id @unique
+  emotion String @unique
+  resources ResourceEmotion[]
+  sessionResults SessionResultEmotions[]
+}
+
+model ResourceEmotion{
+  resourceEmotionId Int @id @default(autoincrement())
+  resource Resource @relation(fields: [resourceId], references: [resourceId])
+  resourceId Int
+  emotion Emotion @relation(fields: [emotionId], references: [emotionId])
+  emotionId Int
+}
+
+model SessionResultEmotions{
+  sessionResultEmotionId Int @id @default(autoincrement())
+  SessionResult TrainingSessionResult @relation(fields: [sessionId], references: [resultId])
+  sessionId Int
+  emotion Emotion @relation(fields: [emotionId], references: [emotionId])
+  emotionId Int
+}
