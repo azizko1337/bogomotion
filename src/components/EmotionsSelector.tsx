@@ -1,20 +1,22 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { toggleStringInArray } from "@/lib/utils";
+import { toggleStringInArray, emotionToText } from "@/lib/utils";
 import { cn } from "@/lib/utils";
 
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Switch } from "@/components/ui/switch";
 
-const emotions = [
-  { key: "anger", text: "złość" },
-  { key: "contempt", text: "pogarda" },
-  { key: "fear", text: "strach" },
-  { key: "disgust", text: "obrzydzenie" },
-  { key: "happiness", text: "szczęście" },
-  { key: "sadness", text: "smutek" },
-  { key: "surprise", text: "zaskoczenie" },
+import type Emotion from "@/types/Emotion";
+
+const emotions: Emotion[] = [
+  "anger",
+  "contempt",
+  "fear",
+  "disgust",
+  "happiness",
+  "sadness",
+  "surprise",
 ];
 
 type Props = {
@@ -25,7 +27,7 @@ function EmotionsSelector(props: Props) {
   const [selectedEmotions, setSelectedEmotions] = useState<string[]>([]);
 
   function handleChange(e: React.MouseEvent<HTMLButtonElement>) {
-    const emotion = e.target.id;
+    const emotion = (e.target as HTMLButtonElement).id;
     setSelectedEmotions(toggleStringInArray(selectedEmotions, emotion));
     console.log(selectedEmotions);
   }
@@ -37,14 +39,14 @@ function EmotionsSelector(props: Props) {
   return (
     <div>
       {emotions.map((emotion) => (
-        <Alert key={emotion.key} className={cn("flex gap-3")}>
+        <Alert key={emotion} className={cn("flex gap-3")}>
           <Switch
-            checked={selectedEmotions.includes(emotion.key)}
-            key={emotion.key}
-            id={emotion.key}
+            checked={selectedEmotions.includes(emotion)}
+            key={emotion}
+            id={emotion}
             onClick={handleChange}
           />
-          <AlertTitle>{emotion.text}</AlertTitle>
+          <AlertTitle>{emotionToText(emotion)}</AlertTitle>
         </Alert>
       ))}
     </div>

@@ -12,6 +12,8 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -35,6 +37,9 @@ const formSchema = z.object({
 });
 
 function Login() {
+  const router = useRouter();
+  const [serverError, setServerError] = useState<string>("");
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -43,11 +48,24 @@ function Login() {
     },
   });
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values);
+  async function onSubmit(values: z.infer<typeof formSchema>) {
+    const res = await fetch("/api/auth/login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(values),
+    });
+    const data = await res.json();
+    if (res.status === 200) {
+      router.push("/");
+      router.refresh();
+    } else {
+      setServerError(data?.message || "Błąd komunikacji z serwerem.");
+    }
   }
   return (
-    <div className="w-full max-w-md">
+    <div className="w-full max-w-md p-5">
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
           <FormField
@@ -82,6 +100,7 @@ function Login() {
               </FormItem>
             )}
           />
+          <p className="flex justify-end text-red-700">{serverError}</p>
           <div className="space-y-2 flex justify-end">
             <Button type="submit">Zaloguj</Button>
           </div>

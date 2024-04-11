@@ -12,7 +12,7 @@ type Props = {
 
 function Question(props: Props) {
   const [selectedEmotions, setSelectedEmotions] = useState<string[]>([]);
-  const resource = props;
+  const { resource } = props;
 
   console.log(selectedEmotions);
 
@@ -21,7 +21,7 @@ function Question(props: Props) {
       <div className="flex gap-6 items-center">
         <div className="relative">
           <div className="w-[500px] h-[500px]">
-            <Image fill src={resource.id} />
+            <Image fill src={resource.resourceId} alt="Obrazek z emocjami" />
           </div>
         </div>
         <EmotionsSelector onEmotionChange={setSelectedEmotions} />

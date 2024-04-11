@@ -7,7 +7,7 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model User {
+model user {
   userId Int @id @unique @default(autoincrement())
   email String @unique
   password String
@@ -15,61 +15,42 @@ model User {
   birthYear Int
   sex String 
   placeOfResidence String
-  additionalInformation String? //TODO: CHYBA ZMIANA
-  trainingSessions TrainingSession[] 
+  additionalInformation String?
+
+  trainingSessions training_session[]
 }
 
-model TrainingSession{
+model training_session{
   sessionId Int @id @default(autoincrement())
-  user User @relation(fields: [userId], references: [userId])
-  userId Int @unique
-  type String 
+  userId Int
+  type String //diagnosis training
   age Int 
-  startedAt DateTime
+  startedAt DateTime 
   endedAt DateTime
-  TrainingSessionResult TrainingSessionResult? 
+
+  TrainingSessionResults training_session_result[]
+  user user @relation(fields: [userId], references: [userId])
 }
 
-model Resource{
-  resourceId Int @id @unique
-  type String
-  age String //??
-  sex String
-  imageCategory String 
-  sessionResults TrainingSessionResult?
-  resourceEmotions ResourceEmotion[]
+model resource{
+  resourceId Int @id @unique @default(autoincrement())
+  type String //image video text audio other
+  age String //child youngAdult middleAgedAdult oldAgedAdult
+  sex String //male female other
+  imageCategory String //face fullBody
+  sessionsResults training_session_result[]
+  resourceEmotions String
 }
 
-model TrainingSessionResult{
+model training_session_result{
   resultId Int @id @default(autoincrement())
-  session TrainingSession @relation(fields: [sessionId], references: [sessionId])
-  sessionId Int @unique
-  resource Resource @relation(fields: [resourceId], references: [resourceId])
-  resourceId Int @unique
+  sessionId Int
+  resourceId Int
   startedAt DateTime
   endedAt DateTime
-  sessionResultsEmotions SessionResultEmotions[]
-}
+  recognizedEmotions String
+  nonRecognizedEmotions String
 
-model Emotion{
-  emotionId Int @id @unique
-  emotion String @unique
-  resources ResourceEmotion[]
-  sessionResults SessionResultEmotions[]
-}
-
-model ResourceEmotion{
-  resourceEmotionId Int @id @default(autoincrement())
-  resource Resource @relation(fields: [resourceId], references: [resourceId])
-  resourceId Int
-  emotion Emotion @relation(fields: [emotionId], references: [emotionId])
-  emotionId Int
-}
-
-model SessionResultEmotions{
-  sessionResultEmotionId Int @id @default(autoincrement())
-  SessionResult TrainingSessionResult @relation(fields: [sessionId], references: [resultId])
-  sessionId Int
-  emotion Emotion @relation(fields: [emotionId], references: [emotionId])
-  emotionId Int
+  session training_session @relation(fields: [sessionId], references: [sessionId])
+  resource resource @relation(fields: [resourceId], references: [resourceId])
 }

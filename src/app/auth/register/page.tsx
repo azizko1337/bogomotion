@@ -1,5 +1,7 @@
 "use client";
 
+import { useRouter } from "next/navigation";
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -69,6 +71,9 @@ const formSchema = z.object({
 });
 
 function Register() {
+  const router = useRouter();
+  const [serverError, setServerError] = useState<string>("");
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -82,7 +87,7 @@ function Register() {
     },
   });
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
+  async function onSubmit(values: z.infer<typeof formSchema>) {
     const { job, education, medicalHistory } = values;
 
     const registerForm: RegisterForm = { ...values, additionalInformation: "" };
@@ -92,7 +97,21 @@ function Register() {
     }, Wykształcenie: ${education || "nie podano"}, Przebyte choroby: ${
       medicalHistory || "nie podano"
     }`;
-    console.log(registerForm);
+
+    const res = await fetch("/api/auth/register", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(registerForm),
+    });
+    const data = await res.json();
+    if (res.status === 200) {
+      router.push("/");
+      router.refresh();
+    } else {
+      setServerError(data?.message || "Błąd komunikacji z serwerem.");
+    }
   }
   return (
     <div className="w-full max-w-md">
@@ -239,8 +258,9 @@ function Register() {
               </FormItem>
             )}
           />
+          <p className="flex justify-end text-red-700">{serverError}</p>
           <div className="space-y-2 flex justify-end">
-            <Button type="submit">Zaloguj</Button>
+            <Button type="submit">Zarejestruj</Button>
           </div>
         </form>
       </Form>

@@ -8,7 +8,13 @@ import { cn } from "@/lib/utils";
 import NavBar from "@/components/NavBar";
 import Footer from "@/components/Footer";
 
-import type FrontUser from "@/types/FrontUser";
+import { cookies } from "next/headers";
+import { getIronSession } from "iron-session";
+import ironOptions from "@/lib/ironOptions";
+
+import type FrontendUser from "@/types/FrontendUser";
+import imageSrc from "/background.png";
+import type Session from "@/types/Session";
 
 const fontSans = FontSans({
   subsets: ["latin"],
@@ -21,26 +27,38 @@ export const metadata: Metadata = {
     "Przetestuj i wzmocnij umiejętność rozpoznawania emocji z Bogomotion.",
 };
 
-function Layout({
+async function getIronSessionData() {
+  const session = await getIronSession(cookies(), ironOptions);
+  return session;
+}
+
+async function Layout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const user: FrontUser = null;
+  const session = (await getIronSessionData()) as Session;
+  if (!session?.user) session.user = null;
+  const { user } = session;
+
+  console.log(user);
 
   return (
     <html lang="pl" suppressHydrationWarning>
       <body
         className={cn(
-          "min-h-screen bg-background font-sans antialiased",
+          " min-h-screen bg-orange-200 font-sans antialiased",
           fontSans.variable
         )}
       >
-        <NavBar user={user} />
-        <div className="max-w-screen-xl m-auto py-4 min-h-[80vh] flex justify-center items-center">
-          {children}
+        {" "}
+        <div className="bg-main-bg bg-right-bottom bg-no-repeat">
+          <NavBar user={user} />
+          <div className=" max-w-screen-xl m-auto py-4 min-h-[84vh] flex justify-center items-center">
+            {children}
+          </div>
+          <Footer />
         </div>
-        <Footer />
       </body>
     </html>
   );
