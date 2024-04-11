@@ -29,14 +29,43 @@ import { z } from "zod";
 import type RegisterForm from "@/types/RegisterForm";
 
 const formSchema = z.object({
-  email: z.string().email().max(320),
-  password: z.string().min(8).max(64),
+  email: z
+    .string({
+      invalid_type_error: "Pole musi być tekstem.",
+      required_error: "Pole jest wymagane.",
+    })
+    .email({ message: "Nieprawidłowy adres email." })
+    .max(320, { message: "Adres email jest zbyt długi." }),
+  password: z
+    .string({
+      invalid_type_error: "Pole musi być tekstem.",
+      required_error: "Pole jest wymagane.",
+    })
+    .min(8, { message: "Hasło musi mieć minimum 8 znaków." })
+    .max(64, { message: "Hasło może mieć maksymalnie 64 znaki." }),
   birthYear: z.coerce.number().min(1900).max(new Date().getFullYear()),
   sex: z.enum(["male", "female", "other"]),
-  placeOfResidence: z.enum(["village", "smallCity", "averageCity", "bigCity"]),
-  job: z.string().max(256).optional(),
-  education: z.string().max(256).optional(),
-  medicalHistory: z.string().max(256).optional(),
+  placeOfResidence: z.enum(["village", "smallCity", "averageCity", "bigCity"], {
+    invalid_type_error: "Nieprawidłowe miejsce zamieszkania.",
+  }),
+  job: z
+    .string({
+      invalid_type_error: "Pole musi być tekstem.",
+    })
+    .max(256, { message: "Maksymalnie 256 znaków." })
+    .optional(),
+  education: z
+    .string({
+      invalid_type_error: "Pole musi być tekstem.",
+    })
+    .max(256, { message: "Maksymalnie 256 znaków." })
+    .optional(),
+  medicalHistory: z
+    .string({
+      invalid_type_error: "Pole musi być tekstem.",
+    })
+    .max(256, { message: "Maksymalnie 256 znaków." })
+    .optional(),
 });
 
 function Register() {
@@ -94,7 +123,7 @@ function Register() {
                 <FormControl>
                   <Input type="password" placeholder="8-64 znaków" {...field} />
                 </FormControl>
-                <FormDescription>Hasło potrzebne do logowania.</FormDescription>
+                <FormDescription>Potrzebne do logowania.</FormDescription>
                 <FormMessage />
               </FormItem>
             )}
@@ -108,7 +137,7 @@ function Register() {
                 <FormControl>
                   <Input type="number" placeholder="1900-2024" {...field} />
                 </FormControl>
-                <FormDescription>Potrzebny do statystyk.</FormDescription>
+                <FormDescription>Do statystyk.</FormDescription>
                 <FormMessage />
               </FormItem>
             )}
@@ -134,9 +163,7 @@ function Register() {
                     <SelectItem value={"other"}>Inna</SelectItem>
                   </SelectContent>
                 </Select>
-                <FormDescription>
-                  Potrzebna do celów statystycznych.
-                </FormDescription>
+                <FormDescription>Do statystyk.</FormDescription>
                 <FormMessage />
               </FormItem>
             )}
@@ -165,9 +192,7 @@ function Register() {
                     <SelectItem value={"bigCity"}>Duże miasto</SelectItem>
                   </SelectContent>
                 </Select>
-                <FormDescription>
-                  Potrzebne do celów statystycznych.
-                </FormDescription>
+                <FormDescription>Do statystyk.</FormDescription>
                 <FormMessage />
               </FormItem>
             )}

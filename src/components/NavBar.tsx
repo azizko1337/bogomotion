@@ -29,9 +29,10 @@ function NavBar(props: Props) {
     <NavigationMenu className={cn("px-3 py-3")}>
       <div className="w-12 h-12 relative cursor-pointer animate-spin-slow hover:animate-spin">
         <Link href="/" legacyBehavior passHref>
-          <Image layout="fill" alt="BOGOLOGO" src="/logo.png" />
+          <Image fill alt="BOGOLOGO" src="/logo.png" />
         </Link>
       </div>
+      <div className="font-bold">BOGOMOTION</div>
       <div className="grow"></div>
       <NavigationMenuList>
         {user ? (

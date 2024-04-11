@@ -32,7 +32,7 @@ model TrainingSession{
 
 model Resource{
   resourceId Int @id @unique
-  type Boolean
+  type String
   age String //??
   sex String
   imageCategory String 

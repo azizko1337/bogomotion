@@ -18,8 +18,20 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 
 const formSchema = z.object({
-  email: z.string().email().max(320),
-  password: z.string().min(8).max(64),
+  email: z
+    .string({
+      invalid_type_error: "Pole musi być tekstem.",
+      required_error: "Pole jest wymagane.",
+    })
+    .email({ message: "Nieprawidłowy adres email." })
+    .max(320, { message: "Adres email jest zbyt długi." }),
+  password: z
+    .string({
+      invalid_type_error: "Pole musi być tekstem.",
+      required_error: "Pole jest wymagane.",
+    })
+    .min(8, { message: "Hasło musi mieć minimum 8 znaków." })
+    .max(64, { message: "Hasło może mieć maksymalnie 64 znaki." }),
 });
 
 function Login() {
