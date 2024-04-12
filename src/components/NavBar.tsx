@@ -28,7 +28,7 @@ function NavBar(props: Props) {
 
   return (
     <NavigationMenu className={cn("px-3 py-3 bg-orange-300")}>
-      <div className="group hover:bg-orange-200 rounded-lg h-[50px] cursor-pointer hover:shadow-2xl">
+      <div className="group hover:bg-[orange-200] rounded-lg h-[50px] cursor-pointer">
         <Link href="/" legacyBehavior passHref>
           <div>
             <div className="animate-spin-slow w-12 h-12 relative group-hover:animate-spin">

@@ -50,6 +50,7 @@ model training_session_result{
   endedAt DateTime
   recognizedEmotions String
   nonRecognizedEmotions String
+  falseRecognizedEmotions String
 
   session training_session @relation(fields: [sessionId], references: [sessionId])
   resource resource @relation(fields: [resourceId], references: [resourceId])

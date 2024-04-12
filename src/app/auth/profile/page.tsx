@@ -186,185 +186,188 @@ function Profile() {
   if (!user) return <Loading />;
 
   return (
-    <div className="w-full max-w-md">
-      <h2 className="text-center mb-8 text-4xl font-bold mb-4">PROFIL</h2>
-      <div className="w-full max-w-md p-5 backdrop-blur-sm bg-white bg-opacity-30 rounded-2xl">
-        <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-            <FormField
-              control={form.control}
-              name="email"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Adres email</FormLabel>
-                  <FormControl>
-                    <Input
-                      type="text"
-                      placeholder="adres@gmail.com"
-                      {...field}
-                    />
-                  </FormControl>
-                  <FormDescription>
-                    Nie wysyłamy żadnych adresów email, potrzebne do logowania.
-                  </FormDescription>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="password"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Hasło</FormLabel>
-                  <FormControl>
-                    <Input
-                      type="password"
-                      placeholder="8-64 znaków"
-                      {...field}
-                    />
-                  </FormControl>
-                  <FormDescription>
-                    Potrzebne do logowania. Jeśli nie chcesz zmieniać hasła,
-                    wpisz tutaj swoje stare hasło.
-                  </FormDescription>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="birthYear"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Rok urodzenia</FormLabel>
-                  <FormControl>
-                    <Input type="number" placeholder="1900-2024" {...field} />
-                  </FormControl>
-                  <FormDescription>Do statystyk.</FormDescription>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="sex"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Płeć</FormLabel>
-                  <Select
-                    onValueChange={field.onChange}
-                    defaultValue={field.value}
-                  >
+    <div>
+      <div className="w-full max-w-md">
+        <h2 className="text-center mb-8 text-4xl font-bold mb-4">PROFIL</h2>
+        <div className="w-full max-w-md p-5 backdrop-blur-sm bg-white bg-opacity-30 rounded-2xl">
+          <Form {...form}>
+            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+              <FormField
+                control={form.control}
+                name="email"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Adres email</FormLabel>
                     <FormControl>
-                      <SelectTrigger>
-                        <SelectValue placeholder="Wybierz płeć" />
-                      </SelectTrigger>
+                      <Input
+                        type="text"
+                        placeholder="adres@gmail.com"
+                        {...field}
+                      />
                     </FormControl>
-                    <SelectContent>
-                      <SelectItem value={"female"}>Kobieta</SelectItem>
-                      <SelectItem value={"male"}>Mężczyzna</SelectItem>
-                      <SelectItem value={"other"}>Inna</SelectItem>
-                    </SelectContent>
-                  </Select>
-                  <FormDescription>Do statystyk.</FormDescription>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="placeOfResidence"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Miejsce zamieszkania</FormLabel>
-                  <Select
-                    onValueChange={field.onChange}
-                    defaultValue={field.value}
-                  >
+                    <FormDescription>
+                      Nie wysyłamy żadnych adresów email, potrzebne do
+                      logowania.
+                    </FormDescription>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="password"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Hasło</FormLabel>
                     <FormControl>
-                      <SelectTrigger>
-                        <SelectValue placeholder="Wybierz miejsce zamieszkania" />
-                      </SelectTrigger>
+                      <Input
+                        type="password"
+                        placeholder="8-64 znaków"
+                        {...field}
+                      />
                     </FormControl>
-                    <SelectContent>
-                      <SelectItem value={"village"}>Wioska</SelectItem>
-                      <SelectItem value={"smallCity"}>Małe miasto</SelectItem>
-                      <SelectItem value={"averageCity"}>
-                        Średnia miasto
-                      </SelectItem>
-                      <SelectItem value={"bigCity"}>Duże miasto</SelectItem>
-                    </SelectContent>
-                  </Select>
-                  <FormDescription>Do statystyk.</FormDescription>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="job"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Zawód (opcjonalne)</FormLabel>
-                  <FormControl>
-                    <Input
-                      type="text"
-                      placeholder="np. informatyk"
-                      {...field}
-                    />
-                  </FormControl>
-                  <FormDescription>Do statystyk.</FormDescription>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="education"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Wykształcenie (opcjonalne)</FormLabel>
-                  <FormControl>
-                    <Input type="text" placeholder="np. średnie" {...field} />
-                  </FormControl>
-                  <FormDescription>Do statystyk.</FormDescription>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="medicalHistory"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Przebyte choroby (opcjonalne)</FormLabel>
-                  <FormControl>
-                    <Input
-                      type="text"
-                      placeholder="np. ospa covid"
-                      {...field}
-                    />
-                  </FormControl>
-                  <FormDescription>
-                    Do statystyk, prosimy o wymienienie po spacji.
-                  </FormDescription>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <p className="flex justify-end text-red-700">{serverError}</p>
-            <div className="space-y-2 flex justify-end items-center">
-              <Button type="submit">Aktualizuj profil</Button>
-            </div>
-          </form>
-        </Form>
-      </div>
-      <div className="space-y-2 flex gap-2 justify-center items-end">
-        <Button onClick={handleLogout}>Wyloguj</Button>
-        <Button onDoubleClick={handleDelete}>
-          Usuń konto (kliknij podwójnie)
-        </Button>
+                    <FormDescription>
+                      Potrzebne do logowania. Jeśli nie chcesz zmieniać hasła,
+                      wpisz tutaj swoje stare hasło.
+                    </FormDescription>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="birthYear"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Rok urodzenia</FormLabel>
+                    <FormControl>
+                      <Input type="number" placeholder="1900-2024" {...field} />
+                    </FormControl>
+                    <FormDescription>Do statystyk.</FormDescription>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="sex"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Płeć</FormLabel>
+                    <Select
+                      onValueChange={field.onChange}
+                      defaultValue={field.value}
+                    >
+                      <FormControl>
+                        <SelectTrigger>
+                          <SelectValue placeholder="Wybierz płeć" />
+                        </SelectTrigger>
+                      </FormControl>
+                      <SelectContent>
+                        <SelectItem value={"female"}>Kobieta</SelectItem>
+                        <SelectItem value={"male"}>Mężczyzna</SelectItem>
+                        <SelectItem value={"other"}>Inna</SelectItem>
+                      </SelectContent>
+                    </Select>
+                    <FormDescription>Do statystyk.</FormDescription>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="placeOfResidence"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Miejsce zamieszkania</FormLabel>
+                    <Select
+                      onValueChange={field.onChange}
+                      defaultValue={field.value}
+                    >
+                      <FormControl>
+                        <SelectTrigger>
+                          <SelectValue placeholder="Wybierz miejsce zamieszkania" />
+                        </SelectTrigger>
+                      </FormControl>
+                      <SelectContent>
+                        <SelectItem value={"village"}>Wioska</SelectItem>
+                        <SelectItem value={"smallCity"}>Małe miasto</SelectItem>
+                        <SelectItem value={"averageCity"}>
+                          Średnia miasto
+                        </SelectItem>
+                        <SelectItem value={"bigCity"}>Duże miasto</SelectItem>
+                      </SelectContent>
+                    </Select>
+                    <FormDescription>Do statystyk.</FormDescription>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="job"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Zawód (opcjonalne)</FormLabel>
+                    <FormControl>
+                      <Input
+                        type="text"
+                        placeholder="np. informatyk"
+                        {...field}
+                      />
+                    </FormControl>
+                    <FormDescription>Do statystyk.</FormDescription>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="education"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Wykształcenie (opcjonalne)</FormLabel>
+                    <FormControl>
+                      <Input type="text" placeholder="np. średnie" {...field} />
+                    </FormControl>
+                    <FormDescription>Do statystyk.</FormDescription>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="medicalHistory"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Przebyte choroby (opcjonalne)</FormLabel>
+                    <FormControl>
+                      <Input
+                        type="text"
+                        placeholder="np. ospa covid"
+                        {...field}
+                      />
+                    </FormControl>
+                    <FormDescription>
+                      Do statystyk, prosimy o wymienienie po spacji.
+                    </FormDescription>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <p className="flex justify-end text-red-700">{serverError}</p>
+              <div className="space-y-2 flex gap-2 justify-center items-end mb-2">
+                <Button type="submit">Aktualizuj profil</Button>
+                <Button onDoubleClick={handleDelete}>
+                  Usuń konto (kliknij podwójnie)
+                </Button>
+              </div>
+              <div className="space-y-2 flex justify-center items-center">
+                <Button onClick={handleLogout}>Wyloguj</Button>
+              </div>
+            </form>
+          </Form>
+        </div>
       </div>
     </div>
   );

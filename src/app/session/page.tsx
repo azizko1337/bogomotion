@@ -25,12 +25,15 @@ import {
 } from "@/components/ui/table";
 import calcNonRecognizedEmotions from "@/lib/calcNonRecognizedEmotions";
 
+import SessionSummary from "@/components/SessionSummary";
+
 function Session() {
   const [results, setResults] = useState<FrontendResult[]>([]);
   const [resources, setResources] = useState<Resource[]>([]);
   const [currentResource, setCurrentResource] = useState<number>(0);
   const [answer, setAnswer] = useState<Emotion[]>([]);
   const [showResult, setShowResult] = useState<boolean>(true);
+  const [isEnded, setIsEnded] = useState<boolean>(false);
 
   const [currentResultStart, setCurrentResultStart] = useState<Date>(
     new Date()
@@ -48,7 +51,7 @@ function Session() {
     return <Loading />;
   }
 
-  function nextQuestion() {
+  async function nextQuestion() {
     if (showResult) {
       // calc result
       const correctAnswer = resources[currentResource].resourceEmotions.split(
@@ -72,6 +75,14 @@ function Session() {
 
       setResults([...results, result]);
     } else {
+      if (currentResource + 1 === resources.length) {
+        setIsEnded(true);
+        const res = await fetch("/api/session", {
+          method: "POST",
+          body: JSON.stringify({ results }),
+        });
+        const data = await res.json();
+      }
       // new question
       setCurrentResource(currentResource + 1);
       setCurrentResultStart(new Date());
@@ -79,8 +90,12 @@ function Session() {
     setShowResult(!showResult);
   }
 
+  if (isEnded) {
+    return <SessionSummary results={results} />;
+  }
+
   return (
-    <div className="w-full flex items-center gap-6">
+    <div className="w-full flex justify-start items-center gap-12 font-bold">
       <Question
         setAnswer={setAnswer}
         currentResource={currentResource}
@@ -89,41 +104,55 @@ function Session() {
         resource={resources[currentResource]}
         showResult={showResult}
       />
-      <Table className={cn("w-6/12 m-auto")}>
-        {!showResult && (
+      <Table
+        className={cn(
+          "w-full max-w-5/12 backdrop-blur-sm bg-white bg-opacity-70"
+        )}
+      >
+        {!showResult && results[results.length - 1].recognizedEmotions && (
           <>
             <TableCaption>WYNIK</TableCaption>
             <TableHeader>
               <TableRow>
-                <TableHead>Typ</TableHead>
-                <TableHead>Emocje</TableHead>
+                <TableHead className={cn("font-black")}>Typ</TableHead>
+                <TableHead className={cn("font-black")}>Emocje</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
               <TableRow>
                 <TableCell>Poprawnie rozpoznane:</TableCell>
+
                 <TableCell>
-                  {results[results.length - 1].recognizedEmotions.map(
-                    (emotion) => (
-                      <li key={emotion}>{emotionToText(emotion as Emotion)}</li>
-                    )
-                  )}
+                  <ul className="list-disc">
+                    {results[results.length - 1].recognizedEmotions.map(
+                      (emotion) => (
+                        <li key={emotion}>
+                          {emotionToText(emotion as Emotion)}
+                        </li>
+                      )
+                    ) ?? []}
+                  </ul>
                 </TableCell>
               </TableRow>
               <TableRow>
                 <TableCell>Fałszywie rozpoznane:</TableCell>
+
                 <TableCell>
-                  {results[results.length - 1].falseRecognizedEmotions.map(
-                    (emotion) => (
-                      <li key={emotion}>{emotionToText(emotion as Emotion)}</li>
-                    )
-                  )}
+                  <ul className="list-disc">
+                    {results[results.length - 1].falseRecognizedEmotions.map(
+                      (emotion) => (
+                        <li key={emotion}>
+                          {emotionToText(emotion as Emotion)}
+                        </li>
+                      )
+                    )}
+                  </ul>
                 </TableCell>
               </TableRow>
               <TableRow>
                 <TableCell>Nierozponane:</TableCell>
                 <TableCell>
-                  <ul>
+                  <ul className="list-disc">
                     {results[results.length - 1].nonRecognizedEmotions.map(
                       (emotion) => (
                         <li key={emotion}>

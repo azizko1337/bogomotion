@@ -32,24 +32,25 @@ function Question(props: Props) {
   }, [selectedEmotions, setAnswer]);
 
   return (
-    <div className="w-6/12 flex flex-col gap-2">
-      <div className="flex gap-6 items-center">
-        <div className="relative">
-          <div className="w-[500px] h-[500px]">
-            <Image
-              fill
-              src={`/resources/${resource.resourceId}.jpg`}
-              alt="Obrazek z emocjami"
-            />
-          </div>
-        </div>
+    <div className="w-7/12 flex gap-6 items-sretch">
+      <div className=" relative w-[500px] h-[500px]">
+        <Image
+          fill
+          src={`/resources/${resource.resourceId}.jpg`}
+          alt="Obrazek z emocjami"
+        />
+      </div>
+
+      <div className="flex flex-col justify-end gap-6">
         {showResult && (
           <EmotionsSelector onEmotionChange={setSelectedEmotions} />
         )}
-      </div>
-      <div className="flex justify-end">
         <Button onClick={nextQuestion}>
-          {showResult ? "Sprawdź" : "Następne pytanie"}
+          {showResult
+            ? "Sprawdź"
+            : currentResource === resourcesCount - 1
+            ? "Zakończ sesję"
+            : `Następne pytanie (${currentResource + 1}/${resourcesCount})`}
         </Button>
       </div>
     </div>

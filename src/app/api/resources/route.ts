@@ -33,7 +33,7 @@ async function GETResources(req: Request) {
     );
   } catch (error: any) {
     return Response.json(
-      { message: error.message || "Nieznany błąd.", user: null },
+      { message: error.message || "Nieznany błąd" },
       { status: 500 }
     );
   }
