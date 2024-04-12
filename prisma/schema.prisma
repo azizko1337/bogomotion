@@ -37,7 +37,7 @@ model resource{
   type String //image video text audio other
   age String //child youngAdult middleAgedAdult oldAgedAdult
   sex String //male female other
-  imageCategory String //face fullBody
+  imageCategory String? //face fullBody
   sessionsResults training_session_result[]
   resourceEmotions String
 }

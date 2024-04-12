@@ -20,7 +20,7 @@ const emotions: Emotion[] = [
 ];
 
 type Props = {
-  onEmotionChange: (emotions: string[]) => void;
+  onEmotionChange: (emotions: Emotion[]) => void;
 };
 
 function EmotionsSelector(props: Props) {
@@ -33,13 +33,13 @@ function EmotionsSelector(props: Props) {
   }
 
   useEffect(() => {
-    props.onEmotionChange(selectedEmotions);
+    props.onEmotionChange(selectedEmotions as Emotion[]);
   }, [selectedEmotions, props]);
 
   return (
     <div>
       {emotions.map((emotion) => (
-        <Alert key={emotion} className={cn("flex gap-3")}>
+        <Alert key={emotion} className={cn("flex gap-2 my-1")}>
           <Switch
             checked={selectedEmotions.includes(emotion)}
             key={emotion}

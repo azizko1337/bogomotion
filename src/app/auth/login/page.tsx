@@ -18,6 +18,7 @@ import { useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
+import FrontendUser from "@/types/FrontendUser";
 
 const formSchema = z.object({
   email: z
@@ -66,46 +67,53 @@ function Login() {
   }
   return (
     <div className="w-full max-w-md p-5">
-      <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-          <FormField
-            control={form.control}
-            name="email"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Adres email</FormLabel>
-                <FormControl>
-                  <Input placeholder="adres@gmail.com" {...field} />
-                </FormControl>
-                <FormDescription>
-                  Adres email podany przy rejestracji.
-                </FormDescription>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="password"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Hasło</FormLabel>
-                <FormControl>
-                  <Input type="password" placeholder="8-64 znaków" {...field} />
-                </FormControl>
-                <FormDescription>
-                  Hasło podane przy rejestracji.
-                </FormDescription>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <p className="flex justify-end text-red-700">{serverError}</p>
-          <div className="space-y-2 flex justify-end">
-            <Button type="submit">Zaloguj</Button>
-          </div>
-        </form>
-      </Form>
+      <h2 className="text-center mb-8 text-4xl font-bold mb-4">LOGOWANIE</h2>{" "}
+      <div className="w-full max-w-md p-5 backdrop-blur-sm bg-white bg-opacity-30 rounded-2xl">
+        <Form {...form}>
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+            <FormField
+              control={form.control}
+              name="email"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Adres email</FormLabel>
+                  <FormControl>
+                    <Input placeholder="adres@gmail.com" {...field} />
+                  </FormControl>
+                  <FormDescription>
+                    Adres email podany przy rejestracji.
+                  </FormDescription>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="password"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Hasło</FormLabel>
+                  <FormControl>
+                    <Input
+                      type="password"
+                      placeholder="8-64 znaków"
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormDescription>
+                    Hasło podane przy rejestracji.
+                  </FormDescription>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <p className="flex justify-end text-red-700">{serverError}</p>
+            <div className="space-y-2 flex justify-end">
+              <Button type="submit">Zaloguj</Button>
+            </div>
+          </form>
+        </Form>
+      </div>
     </div>
   );
 }

@@ -12,6 +12,7 @@ import {
   NavigationMenuTrigger,
   NavigationMenuViewport,
   navigationMenuTriggerStyle,
+  navigationMenuTriggerStyleWhite,
 } from "@/components/ui/navigation-menu";
 
 import { cn } from "@/lib/utils";
@@ -46,21 +47,21 @@ function NavBar(props: Props) {
             <NavigationMenuItem>
               <Link href="/stats" legacyBehavior passHref>
                 <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                  Statistics
+                  Statystyki
                 </NavigationMenuLink>
               </Link>
             </NavigationMenuItem>
             <NavigationMenuItem>
               <Link href="/history" legacyBehavior passHref>
                 <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                  Training history
+                  Historia treningów
                 </NavigationMenuLink>
               </Link>
             </NavigationMenuItem>
             <NavigationMenuItem>
-              <Link href="/profile" legacyBehavior passHref>
+              <Link href="/auth/profile" legacyBehavior passHref>
                 <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                  Profile
+                  Profil
                 </NavigationMenuLink>
               </Link>
             </NavigationMenuItem>
@@ -76,7 +77,9 @@ function NavBar(props: Props) {
             </NavigationMenuItem>
             <NavigationMenuItem>
               <Link href="/auth/register" legacyBehavior passHref>
-                <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+                <NavigationMenuLink
+                  className={navigationMenuTriggerStyleWhite()}
+                >
                   Zarejestruj
                 </NavigationMenuLink>
               </Link>

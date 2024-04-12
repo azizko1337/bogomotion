@@ -28,107 +28,118 @@ function Stats() {
   };
 
   return (
-    <div className="flex gap-12">
-      <Table>
-        <TableCaption>Ostatnie 10 gier</TableCaption>
-        <TableHeader>
-          <TableRow>
-            <TableHead className="">Statystyka</TableHead>
-            <TableHead className="">Wartość</TableHead>
-          </TableRow>
-        </TableHeader>
-        <TableBody>
-          <TableRow>
-            <TableCell className="font-medium">Skuteczność:</TableCell>
-            <TableCell className="">
-              {Math.round(
-                (stats.lastTenGames.goodAnswers * 100) /
-                  (stats.lastTenGames.goodAnswers +
-                    stats.lastTenGames.badAnswers)
-              )}
-              %
-            </TableCell>
-          </TableRow>
-          <TableRow>
-            <TableCell className="font-medium">Dobre odpowiedzi:</TableCell>
-            <TableCell className="">{stats.lastTenGames.goodAnswers}</TableCell>
-          </TableRow>
-          <TableRow>
-            <TableCell className="font-medium">Złe odpowiedzi:</TableCell>
-            <TableCell className="">{stats.lastTenGames.badAnswers}</TableCell>
-          </TableRow>
-          <TableRow>
-            <TableCell className="font-medium">
-              Największa skuteczność:
-            </TableCell>
-            <TableCell className="">
-              {stats.lastTenGames.mostAccurateEmotions.map(
-                (emotion) => `${emotionToText(emotion)} `
-              )}
-            </TableCell>
-          </TableRow>
-          <TableRow>
-            <TableCell className="font-medium">
-              Najmniejsza skuteczność:
-            </TableCell>
-            <TableCell className="">
-              {stats.lastTenGames.leastAccurateEmotions.map(
-                (emotion) => `${emotionToText(emotion)} `
-              )}
-            </TableCell>
-          </TableRow>
-        </TableBody>
-      </Table>
-      <Table>
-        <TableCaption>Cała historia</TableCaption>
-        <TableHeader>
-          <TableRow>
-            <TableHead className="">Statystyka</TableHead>
-            <TableHead className="">Wartość</TableHead>
-          </TableRow>
-        </TableHeader>
-        <TableBody>
-          <TableRow>
-            <TableCell className="font-medium">Skuteczność:</TableCell>
-            <TableCell className="">
-              {Math.round(
-                (stats.wholeHistory.goodAnswers * 100) /
-                  (stats.wholeHistory.goodAnswers +
-                    stats.wholeHistory.badAnswers)
-              )}
-              %
-            </TableCell>
-          </TableRow>
-          <TableRow>
-            <TableCell className="font-medium">Dobre odpowiedzi:</TableCell>
-            <TableCell className="">{stats.wholeHistory.goodAnswers}</TableCell>
-          </TableRow>
-          <TableRow>
-            <TableCell className="font-medium">Złe odpowiedzi:</TableCell>
-            <TableCell className="">{stats.wholeHistory.badAnswers}</TableCell>
-          </TableRow>
-          <TableRow>
-            <TableCell className="font-medium">
-              Największa skuteczność:
-            </TableCell>
-            <TableCell className="">
-              {stats.wholeHistory.mostAccurateEmotions.map(
-                (emotion) => `${emotionToText(emotion)} `
-              )}
-            </TableCell>
-          </TableRow>
-          <TableRow>
-            <TableCell className="font-medium">
-              Najmniejsza skuteczność:
-            </TableCell>
-            <TableCell className="">
-              {stats.wholeHistory.leastAccurateEmotions.map(
-                (emotion) => `${emotionToText(emotion)} `
-              )}
-            </TableCell>
-          </TableRow>
-        </TableBody>
-      </Table>
+    <div>
+      <h2 className="ml-[275px] mb-8 font-bold text-3xl">STATYSTYKI</h2>
+      <div className="p-3 backdrop-blur-sm flex gap-12 font-bold bg-white bg-opacity-30 rounded-2xl">
+        <Table>
+          <TableCaption>Ostatnie 10 gier</TableCaption>
+          <TableHeader>
+            <TableRow>
+              <TableHead className="">Statystyka</TableHead>
+              <TableHead className="">Wartość</TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            <TableRow>
+              <TableCell className="font-medium">Skuteczność:</TableCell>
+              <TableCell className="">
+                {Math.round(
+                  (stats.lastTenGames.goodAnswers * 100) /
+                    (stats.lastTenGames.goodAnswers +
+                      stats.lastTenGames.badAnswers)
+                )}
+                %
+              </TableCell>
+            </TableRow>
+            <TableRow>
+              <TableCell className="font-medium">Dobre odpowiedzi:</TableCell>
+              <TableCell className="">
+                {stats.lastTenGames.goodAnswers}
+              </TableCell>
+            </TableRow>
+            <TableRow>
+              <TableCell className="font-medium">Złe odpowiedzi:</TableCell>
+              <TableCell className="">
+                {stats.lastTenGames.badAnswers}
+              </TableCell>
+            </TableRow>
+            <TableRow>
+              <TableCell className="font-medium">
+                Największa skuteczność:
+              </TableCell>
+              <TableCell className="">
+                {stats.lastTenGames.mostAccurateEmotions.map(
+                  (emotion) => `${emotionToText(emotion)} `
+                )}
+              </TableCell>
+            </TableRow>
+            <TableRow>
+              <TableCell className="font-medium">
+                Najmniejsza skuteczność:
+              </TableCell>
+              <TableCell className="">
+                {stats.lastTenGames.leastAccurateEmotions.map(
+                  (emotion) => `${emotionToText(emotion)} `
+                )}
+              </TableCell>
+            </TableRow>
+          </TableBody>
+        </Table>
+        <Table>
+          <TableCaption>Cała historia</TableCaption>
+          <TableHeader>
+            <TableRow>
+              <TableHead className="">Statystyka</TableHead>
+              <TableHead className="">Wartość</TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            <TableRow>
+              <TableCell className="font-medium">Skuteczność:</TableCell>
+              <TableCell className="">
+                {Math.round(
+                  (stats.wholeHistory.goodAnswers * 100) /
+                    (stats.wholeHistory.goodAnswers +
+                      stats.wholeHistory.badAnswers)
+                )}
+                %
+              </TableCell>
+            </TableRow>
+            <TableRow>
+              <TableCell className="font-medium">Dobre odpowiedzi:</TableCell>
+              <TableCell className="">
+                {stats.wholeHistory.goodAnswers}
+              </TableCell>
+            </TableRow>
+            <TableRow>
+              <TableCell className="font-medium">Złe odpowiedzi:</TableCell>
+              <TableCell className="">
+                {stats.wholeHistory.badAnswers}
+              </TableCell>
+            </TableRow>
+            <TableRow>
+              <TableCell className="font-medium">
+                Największa skuteczność:
+              </TableCell>
+              <TableCell className="">
+                {stats.wholeHistory.mostAccurateEmotions.map(
+                  (emotion) => `${emotionToText(emotion)} `
+                )}
+              </TableCell>
+            </TableRow>
+            <TableRow>
+              <TableCell className="font-medium">
+                Najmniejsza skuteczność:
+              </TableCell>
+              <TableCell className="">
+                {stats.wholeHistory.leastAccurateEmotions.map(
+                  (emotion) => `${emotionToText(emotion)} `
+                )}
+              </TableCell>
+            </TableRow>
+          </TableBody>
+        </Table>
+      </div>
     </div>
   );
 }

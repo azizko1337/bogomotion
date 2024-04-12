@@ -1,7 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -22,12 +22,13 @@ import {
 import { toast } from "@/components/ui/use-toast";
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
-import FrontendUser from "@/types/FrontendUser";
 
 import Link from "next/link";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
+import Loading from "@/components/Loading";
+import type FrontendUser from "@/types/FrontendUser";
 
 import type RegisterForm from "@/types/RegisterForm";
 
@@ -71,9 +72,23 @@ const formSchema = z.object({
     .optional(),
 });
 
-function Register() {
+function Profile() {
   const router = useRouter();
+  const [user, setUser] = useState<FrontendUser | null>(null);
   const [serverError, setServerError] = useState<string>("");
+
+  useEffect(() => {
+    fetch("/api/auth/user", { method: "GET" })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data) {
+          setUser(data.user);
+        } else {
+          router.push("/login");
+        }
+      })
+      .catch((error) => router.push("/"));
+  }, [setUser]);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -88,6 +103,37 @@ function Register() {
     },
   });
 
+  useEffect(() => {
+    form.setValue("email", user?.email || "");
+    form.setValue("birthYear", user?.birthYear || new Date().getFullYear());
+    form.setValue("placeOfResidence", user?.placeOfResidence || "village");
+    form.setValue("sex", user?.sex || "female");
+
+    const additionalInformation = user?.additionalInformation || "";
+    const additionalInformationArray =
+      additionalInformation.split(/[:][\s]|[,][\s]/);
+
+    console.log(additionalInformationArray);
+    form.setValue(
+      "job",
+      additionalInformation[1] != "nie podano"
+        ? additionalInformationArray[1]
+        : additionalInformationArray[1]
+    );
+    form.setValue(
+      "education",
+      additionalInformation[3] != "nie podano"
+        ? additionalInformationArray[3]
+        : additionalInformationArray[3]
+    );
+    form.setValue(
+      "medicalHistory",
+      additionalInformation[5] != "nie podano"
+        ? additionalInformationArray[5]
+        : additionalInformationArray[5]
+    );
+  }, [user, form]);
+
   async function onSubmit(values: z.infer<typeof formSchema>) {
     const { job, education, medicalHistory } = values;
 
@@ -99,8 +145,8 @@ function Register() {
       medicalHistory || "nie podano"
     }`;
 
-    const res = await fetch("/api/auth/register", {
-      method: "POST",
+    const res = await fetch("/api/auth/user", {
+      method: "PUT",
       headers: {
         "Content-Type": "application/json",
       },
@@ -114,12 +160,34 @@ function Register() {
       setServerError(data?.message || "Błąd komunikacji z serwerem.");
     }
   }
+
+  async function handleLogout() {
+    const res = await fetch("/api/auth/logout", { method: "GET" });
+    if (res.status === 200) {
+      router.push("/");
+      router.refresh();
+    } else {
+      const data = await res.json();
+      setServerError(data?.message || "Błąd komunikacji z serwerem.");
+    }
+  }
+
+  async function handleDelete() {
+    const res = await fetch("/api/auth/user", { method: "DELETE" });
+    if (res.status === 200) {
+      router.push("/");
+      router.refresh();
+    } else {
+      const data = await res.json();
+      setServerError(data?.message || "Błąd komunikacji z serwerem.");
+    }
+  }
+
+  if (!user) return <Loading />;
+
   return (
-    <div className="w-full max-w-md ">
-      <h2 className="text-center mt-6 text-4xl font-bold mb-4">
-        {" "}
-        REJESTRACJA{" "}
-      </h2>
+    <div className="w-full max-w-md">
+      <h2 className="text-center mb-8 text-4xl font-bold mb-4">PROFIL</h2>
       <div className="w-full max-w-md p-5 backdrop-blur-sm bg-white bg-opacity-30 rounded-2xl">
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
@@ -156,7 +224,10 @@ function Register() {
                       {...field}
                     />
                   </FormControl>
-                  <FormDescription>Potrzebne do logowania.</FormDescription>
+                  <FormDescription>
+                    Potrzebne do logowania. Jeśli nie chcesz zmieniać hasła,
+                    wpisz tutaj swoje stare hasło.
+                  </FormDescription>
                   <FormMessage />
                 </FormItem>
               )}
@@ -220,7 +291,7 @@ function Register() {
                       <SelectItem value={"village"}>Wioska</SelectItem>
                       <SelectItem value={"smallCity"}>Małe miasto</SelectItem>
                       <SelectItem value={"averageCity"}>
-                        Średnie miasto
+                        Średnia miasto
                       </SelectItem>
                       <SelectItem value={"bigCity"}>Duże miasto</SelectItem>
                     </SelectContent>
@@ -283,14 +354,20 @@ function Register() {
               )}
             />
             <p className="flex justify-end text-red-700">{serverError}</p>
-            <div className="space-y-2 flex justify-end">
-              <Button type="submit">Zarejestruj</Button>
+            <div className="space-y-2 flex justify-end items-center">
+              <Button type="submit">Aktualizuj profil</Button>
             </div>
           </form>
         </Form>
+      </div>
+      <div className="space-y-2 flex gap-2 justify-center items-end">
+        <Button onClick={handleLogout}>Wyloguj</Button>
+        <Button onDoubleClick={handleDelete}>
+          Usuń konto (kliknij podwójnie)
+        </Button>
       </div>
     </div>
   );
 }
 
-export default Register;
+export default Profile;

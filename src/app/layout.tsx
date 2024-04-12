@@ -7,6 +7,7 @@ import { cn } from "@/lib/utils";
 
 import NavBar from "@/components/NavBar";
 import Footer from "@/components/Footer";
+import React from "react";
 
 import { cookies } from "next/headers";
 import { getIronSession } from "iron-session";
@@ -41,8 +42,6 @@ async function Layout({
   if (!session?.user) session.user = null;
   const { user } = session;
 
-  console.log(user);
-
   return (
     <html lang="pl" suppressHydrationWarning>
       <body
@@ -54,7 +53,7 @@ async function Layout({
         {" "}
         <div className="bg-main-bg bg-right-bottom bg-no-repeat">
           <NavBar user={user} />
-          <div className=" max-w-screen-xl m-auto py-4 min-h-[84vh] flex justify-center items-center">
+          <div className=" max-w-screen-xl m-auto py-4 min-h-[85vh] flex justify-center items-center">
             {children}
           </div>
           <Footer />

@@ -44,7 +44,14 @@ async function RegisterRoute(req: Request) {
     }
 
     try {
-      validateUser(email, password, birthYear, sex, placeOfResidence);
+      validateUser(
+        email,
+        password,
+        birthYear,
+        sex,
+        placeOfResidence,
+        additionalInformation
+      );
     } catch (error: any) {
       throw new Error(error.message);
     }

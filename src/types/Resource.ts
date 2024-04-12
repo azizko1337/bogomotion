@@ -5,7 +5,7 @@ type Resource = {
   type: string;
   age: string;
   imageCategory: string;
-  resourceEmotions: Emotion[];
+  resourceEmotions: string;
 };
 
 export default Resource;

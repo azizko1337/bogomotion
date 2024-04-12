@@ -3,8 +3,14 @@ export function validateUser(
   password: string,
   birthYear: string,
   sex: string,
-  placeOfResidence: string
+  placeOfResidence: string,
+  additionalInformation?: string
 ) {
+  if (
+    !(additionalInformation == undefined || additionalInformation.length < 512)
+  ) {
+    throw new Error("Niepoprawne dodatkowe informacje.");
+  }
   if (!/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(email)) {
     throw new Error("Niepoprawny email.");
   }
