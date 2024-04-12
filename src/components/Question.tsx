@@ -15,6 +15,7 @@ import {
 
 import Loading from "@/components/Loading";
 
+import { emotionToText } from "@/lib/utils";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -23,6 +24,18 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import {
+  Drawer,
+  DrawerClose,
+  DrawerContent,
+  DrawerDescription,
+  DrawerFooter,
+  DrawerHeader,
+  DrawerTitle,
+  DrawerTrigger,
+} from "@/components/ui/drawer";
+
+import stachConfig from "@/../stach.config.js";
 
 type Props = {
   resource: Resource;
@@ -50,35 +63,79 @@ function Question(props: Props) {
   }, [selectedEmotions, setAnswer]);
 
   async function fetchAiHelp() {
+    console.log(1);
+    console.log(process.env);
     if (aiHelp.length === 0) {
-      const res = await fetch(`${process.env.STACH_API_URL}/`, {
+      const res = await fetch(`${stachConfig.url}/`, {
         method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
         body: JSON.stringify({
-          face_url: `${process.env.THIS}/resources/${resource.resourceId}.jpg`,
-          key: process.env.STACH_API_KEY,
+          face_url: `${stachConfig.this}/resources/${resource.resourceId}.jpg`,
+          key: stachConfig.key,
         }),
       });
       const data = await res.json();
-      console.log(data);
+      for (const emotion in data.emotions) {
+        setAiHelp((prev) => [
+          ...prev,
+          { emotion, value: data.emotions[emotion] },
+        ]);
+      }
     }
   }
   function clearAiHelp() {
     setAiHelp([]);
   }
 
+  console.log(aiHelp);
+
   return (
     <>
       {showResult && (
+        <Drawer>
+          <DrawerTrigger
+            onClick={fetchAiHelp}
+            className={cn("w-[150px] h-[150px] fixed bottom-12 right-12")}
+          >
+            <Image fill alt="AI ASSISTANT" src="/ai.png" />
+          </DrawerTrigger>
+
+          <DrawerContent>
+            <DrawerHeader>
+              <DrawerTitle>Pomoc AI</DrawerTitle>
+              <DrawerDescription>Opinia asystenta AI</DrawerDescription>
+            </DrawerHeader>
+            <DrawerFooter>
+              {aiHelp.length == 0 ? (
+                <Loading />
+              ) : (
+                aiHelp.map((help) => (
+                  <div key={help.emotion}>
+                    {emotionToText(help.emotion)}: {Math.round(help.value)}%
+                  </div>
+                ))
+              )}
+              <DrawerClose>
+                <Button variant="outline">Zamknij</Button>
+              </DrawerClose>
+            </DrawerFooter>
+          </DrawerContent>
+        </Drawer>
+      )}
+      {/* {showResult && (
         <DropdownMenu>
           <DropdownMenuTrigger
             className={cn(
-              "animate-pulse w-[150px] h-[150px] absolute bottom-12 right-12"
+              "animate-pulse z-1 w-[150px] h-[150px] absolute bottom-20 right-12"
             )}
           >
-            <HoverCard>
-              <HoverCardTrigger onClick={fetchAiHelp} className={cn("")}>
-                <Image fill alt="AI ASSISTANT" src="/ai.png" />
-              </HoverCardTrigger>
+            <HoverCard className={cn("cursor-pointer")}>
+              <HoverCardTrigger
+                onClick={fetchAiHelp}
+                className={cn("cursor-pointer")}
+              ></HoverCardTrigger>
               <HoverCardContent>
                 <p>Naciśnij, aby skorzystać z opinii asystenta AI</p>
               </HoverCardContent>
@@ -87,14 +144,19 @@ function Question(props: Props) {
           <DropdownMenuContent>
             <DropdownMenuLabel>Pomoc AI</DropdownMenuLabel>
             <DropdownMenuSeparator />
-            <Loading />
-            <DropdownMenuItem>Profile</DropdownMenuItem>
-            <DropdownMenuItem>Billing</DropdownMenuItem>
-            <DropdownMenuItem>Team</DropdownMenuItem>
-            <DropdownMenuItem>Subscription</DropdownMenuItem>
+
+            {aiHelp.length == 0 ? (
+              <Loading />
+            ) : (
+              aiHelp.map((help) => (
+                <DropdownMenuItem key={help.emotion}>
+                  {emotionToText(help.emotion)}: {Math.round(help.value)}%
+                </DropdownMenuItem>
+              ))
+            )}
           </DropdownMenuContent>
         </DropdownMenu>
-      )}
+      )} */}
       <div className="w-7/12 flex gap-6 items-sretch">
         <div className=" relative w-[500px] h-[500px]">
           <Image
