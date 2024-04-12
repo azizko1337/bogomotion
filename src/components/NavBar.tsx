@@ -51,13 +51,13 @@ function NavBar(props: Props) {
                 </NavigationMenuLink>
               </Link>
             </NavigationMenuItem>
-            <NavigationMenuItem>
+            {/* <NavigationMenuItem>
               <Link href="/history" legacyBehavior passHref>
                 <NavigationMenuLink className={navigationMenuTriggerStyle()}>
                   Historia treningów
                 </NavigationMenuLink>
               </Link>
-            </NavigationMenuItem>
+            </NavigationMenuItem> */}
             <NavigationMenuItem>
               <Link href="/auth/profile" legacyBehavior passHref>
                 <NavigationMenuLink className={navigationMenuTriggerStyle()}>

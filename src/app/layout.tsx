@@ -26,6 +26,9 @@ export const metadata: Metadata = {
   title: "Bogomotion",
   description:
     "Przetestuj i wzmocnij umiejętność rozpoznawania emocji z Bogomotion.",
+  icons: {
+    icon: "/logo.png",
+  },
 };
 
 async function getIronSessionData() {
@@ -44,6 +47,9 @@ async function Layout({
 
   return (
     <html lang="pl" suppressHydrationWarning>
+      <head>
+        <link rel="icon" href="/logo.png" />
+      </head>
       <body
         className={cn(
           " min-h-screen bg-orange-200 font-sans antialiased",

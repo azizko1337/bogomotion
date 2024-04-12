@@ -34,7 +34,7 @@ function SessionSummary(props: Props) {
   return (
     <div className="flex flex-col items-center gap-2">
       <HoverCard>
-        <HoverCardTrigger className={cn("animate-pulse")}>
+        <HoverCardTrigger className={cn("animate-pulse text-xl")}>
           Twój wynik: {score}%
         </HoverCardTrigger>
         <HoverCardContent>
