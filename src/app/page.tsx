@@ -20,9 +20,12 @@ async function Index() {
 
   return (
     <main className="flex justify-start w-full">
-      <div className="p-12 text-center content-center text-white rounded-[20px] shadow-2xl bg-opacity-20 backdrop-blur-sm bg-white hover:translate-y-[-5px] hover:shadow-lg">
-        <h1 className="text-black text-7xl mb-4 font-medium ">EMOCJE</h1>
+      <div className="align-middle p-14 text-center content-center text-white rounded-[20px] shadow-2xl bg-opacity-20 backdrop-blur-sm bg-white hover:translate-y-[-5px] hover:shadow-lg">
+        <div className="mt-[-4px] flex justify-center">
+          <img src="/EMOCJE.png" width="500px" />
+        </div>
         <a className="text-xl text-gray-900">
+          <br />
           Czy jesteś pewny swoich umiejętności rozpoznawania emocji?
           <br />
           Przeprowadź test diagnostyczny aby się przekonać.

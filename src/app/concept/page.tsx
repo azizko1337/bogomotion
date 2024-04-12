@@ -3,8 +3,10 @@ import Link from "next/link";
 function Concept() {
   return (
     <div className="ml-[-150px] h-[600px] w-full content-center text-center">
-      <div className="w-3/5 h-[300px] backdrop-blur-sm bg-white bg-opacity-30 rounded-2xl shadow-xl font-bold pt-10">
-        <h2 className="mb-3 text-5xl font-bold"> KONCEPT </h2>
+      <div className="w-3/5 h-[400px] backdrop-blur-sm bg-white bg-opacity-30 rounded-2xl shadow-xl font-bold pt-10">
+        <div className="mt-[-4px] flex justify-center">
+          <img src="/KONCEPT.png" width="500px" />
+        </div>
         Nauka o emocjach ma na celu zrozumienie oraz wyjaśnienie ich funkcji,{" "}
         <br />
         wywoływania, wyrażania i regulacji. Badanie emocji pomaga lepiej

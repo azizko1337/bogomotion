@@ -1,5 +1,9 @@
+import { useState } from "react";
+
 function History() {
-  return <div></div>;
+  // const [history, setHistory] = useState<>;
+
+  return <></>;
 }
 
 export default History;
