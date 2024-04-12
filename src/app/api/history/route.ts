@@ -25,14 +25,17 @@ async function GETHistory() {
       falseRecognizedEmotions: 0,
       nonRecognizedEmotions: 0,
     };
+    let objects = [];
 
     for (const trainingSessionResult of history) {
+      let endedAt = "0";
       for (const trainingResult of trainingSessionResult.TrainingSessionResults) {
         const {
           recognizedEmotions,
           falseRecognizedEmotions,
           nonRecognizedEmotions,
         } = trainingResult;
+        endedAt = trainingResult.endedAt.toString();
         const recognizedEmotionsArray = recognizedEmotions.split(" ");
         const falseRecognizedEmotionsArray = falseRecognizedEmotions.split(" ");
         const nonRecognizedEmotionsArray = nonRecognizedEmotions.split(" ");
@@ -47,12 +50,16 @@ async function GETHistory() {
           counters.nonRecognizedEmotions++;
         });
       }
+      objects.push({ endedAt: endedAt, counters: counters });
     }
+
+    console.log("asdsad");
+    console.log(objects);
 
     return Response.json(
       {
         message: "ok",
-        objects: [...history.map((h) => h.TrainingSessionResults.)],
+        objects: objects,
       },
       { status: 200 }
     );

@@ -1,5 +1,8 @@
 type HistoryObj = {
   endedAt: string;
-  recognizedEmotions: number;
-  nonRecognizedEmotions: number;
+  counters: {
+    recognizedEmotions: number;
+    falseRecognizedEmotions: number;
+    nonRecognizedEmotions: number;
+  };
 };

@@ -29,7 +29,7 @@ model training_session{
   endedAt DateTime
 
   TrainingSessionResults training_session_result[]
-  user user @relation(fields: [userId], references: [userId])
+  user user @relation(fields: [userId], references: [userId], onDelete: Cascade, onUpdate: Cascade) 
 }
 
 model resource{
@@ -52,6 +52,6 @@ model training_session_result{
   nonRecognizedEmotions String
   falseRecognizedEmotions String
 
-  session training_session @relation(fields: [sessionId], references: [sessionId])
-  resource resource @relation(fields: [resourceId], references: [resourceId])
+  session training_session @relation(fields: [sessionId], references: [sessionId], onDelete: Cascade, onUpdate: Cascade)
+  resource resource @relation(fields: [resourceId], references: [resourceId], onDelete: Cascade, onUpdate: Cascade)
 }

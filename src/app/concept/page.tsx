@@ -7,6 +7,7 @@ function Concept() {
         <div className="mt-[-4px] flex justify-center">
           <img src="/KONCEPT.png" width="500px" />
         </div>
+        <br />
         Nauka o emocjach ma na celu zrozumienie oraz wyjaśnienie ich funkcji,{" "}
         <br />
         wywoływania, wyrażania i regulacji. Badanie emocji pomaga lepiej
