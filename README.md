@@ -1,4 +1,5 @@
-# Hackemotion
+# [Hackemotion](https://hackemotion.us.edu.pl) project
+## 24h programming marathon
 
 ## Connected with [bogomotion-ai-module](https://github.com/PanPeryskop/bogomotion-ai-module)
 
