@@ -17,5 +17,5 @@
 
 1. Clone repository
 2. Run `npm install`
-3. Configure `bogomotion-ai-module`'s api in `stach.config.js` file *not nescessary but recommended for full experience*
+3. Configure `[bogomotion-ai-module](https://github.com/PanPeryskop/bogomotion-ai-module)`'s api in `stach.config.js` file (*not nescessary but recommended for full experience*)
 4. Run development server with `npm run dev` command
